@@ -3,46 +3,443 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>시세표 제작 · 엑셀 서식 제작</title>
+  <title>개인 소개 | Your Name</title>
+  <meta name="description" content="개인 소개형 홈페이지 (좌측 메뉴 + 우측 내용)" />
+
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; background:#f6f7f9; color:#111; }
-    .wrap { max-width: 900px; margin: 0 auto; padding: 40px 16px; }
-    .card { background:#fff; border-radius:16px; padding: 28px; box-shadow: 0 6px 18px rgba(0,0,0,.08); }
-    h1 { margin: 0 0 10px; font-size: 28px; }
-    p { margin: 8px 0; line-height: 1.6; }
-    .grid { display:grid; grid-template-columns: 1fr; gap: 14px; margin-top: 18px; }
-    .box { background:#f2f4f7; border-radius:14px; padding: 16px; }
-    .btns { display:flex; flex-wrap:wrap; gap:10px; margin-top: 18px; }
-    a.btn { display:inline-block; text-decoration:none; background:#111; color:#fff; padding: 12px 14px; border-radius:12px; }
-    a.ghost { background:#fff; color:#111; border:1px solid #ddd; }
-    .small { font-size: 13px; color:#555; margin-top: 14px; }
-    @media (min-width: 780px){ .grid { grid-template-columns: 1fr 1fr; } }
+    :root{
+      --bg: #0b0f19;
+      --panel: #111827;
+      --panel2: #0f172a;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --line: rgba(255,255,255,0.10);
+      --accent: #60a5fa;
+      --shadow: 0 12px 30px rgba(0,0,0,0.25);
+      --radius: 14px;
+    }
+
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior: smooth; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+      background: radial-gradient(1200px 800px at 20% 0%, rgba(96,165,250,0.18), transparent 60%),
+                  radial-gradient(900px 600px at 100% 30%, rgba(52,211,153,0.10), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    .wrap{
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Left Menu */
+    aside{
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 22px 18px;
+      border-right: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(17,24,39,0.9), rgba(15,23,42,0.75));
+      backdrop-filter: blur(8px);
+    }
+
+    .brand{
+      display:flex;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 10px 14px;
+      border-radius: var(--radius);
+    }
+    .avatar{
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(96,165,250,0.9), rgba(52,211,153,0.8));
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
+    }
+    .brand h1{
+      font-size: 16px;
+      margin: 0;
+    }
+    .brand p{
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    nav{
+      margin-top: 16px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(15,23,42,0.45);
+    }
+    .nav-title{
+      font-size: 12px;
+      color: var(--muted);
+      padding: 8px 8px 6px;
+      letter-spacing: 0.2px;
+    }
+    .menu{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 6px;
+    }
+    .menu a{
+      display:flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      background: rgba(255,255,255,0.03);
+      transition: 0.15s ease;
+      font-size: 14px;
+    }
+    .menu a:hover{
+      border-color: rgba(96,165,250,0.45);
+      background: rgba(96,165,250,0.10);
+    }
+    .menu a.active{
+      border-color: rgba(96,165,250,0.70);
+      background: rgba(96,165,250,0.14);
+      box-shadow: 0 0 0 3px rgba(96,165,250,0.10);
+    }
+    .badge{
+      font-size: 11px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.18);
+    }
+
+    .side-footer{
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pill{
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      transition: 0.15s ease;
+    }
+    .pill:hover{
+      border-color: rgba(52,211,153,0.50);
+      color: var(--text);
+      background: rgba(52,211,153,0.10);
+    }
+
+    /* Right Content */
+    main{
+      padding: 28px 28px 40px;
+      max-width: 980px;
+    }
+    header.hero{
+      padding: 18px 18px;
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 4px);
+      background: rgba(17,24,39,0.40);
+      box-shadow: var(--shadow);
+    }
+    .hero h2{
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: -0.2px;
+    }
+    .hero .sub{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .cta{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      transition: 0.15s ease;
+      font-size: 13px;
+    }
+    .btn:hover{
+      border-color: rgba(96,165,250,0.55);
+      background: rgba(96,165,250,0.10);
+    }
+    .btn.primary{
+      border-color: rgba(96,165,250,0.70);
+      background: rgba(96,165,250,0.16);
+    }
+
+    section.card{
+      margin-top: 18px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 4px);
+      background: rgba(15,23,42,0.38);
+      box-shadow: var(--shadow);
+    }
+    section.card h3{
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+    .muted{ color: var(--muted); }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .tile{
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255,255,255,0.03);
+    }
+    .tile strong{
+      display:block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+    ul.clean{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--text);
+    }
+    ul.clean li{ margin: 6px 0; }
+
+    .split{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .kpi{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .kpi span{
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.16);
+    }
+
+    footer{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 8px 4px;
+    }
+
+    /* Mobile */
+    @media (max-width: 860px){
+      .wrap{ grid-template-columns: 1fr; }
+      aside{
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+      .side-footer{
+        position: relative;
+        left: 0; right: 0; bottom: 0;
+        padding: 12px 4px 0;
+      }
+      main{ padding: 18px; }
+      .grid, .split{ grid-template-columns: 1fr; }
+    }
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <div class="card">
-      <h1>휴대폰 성지 시세표 이미지 · 서식 제작</h1>
-      <p>매일 가격만 바꾸면 바로 올릴 수 있도록, <b>시세표 이미지</b>와 <b>엑셀/구글시트 서식</b>을 제작합니다.</p>
-
-      <div class="grid">
-        <div class="box">
-          <b>제공 항목</b>
-          <p>· 시세표 이미지(PNG/JPG)<br/>· 가격 입력용 엑셀/시트 템플릿<br/>· SNS 비율(1:1, 4:5) 대응</p>
-        </div>
-        <div class="box">
-          <b>가격(예시)</b>
-          <p>· 기본형: 10~15만원<br/>· 템플릿형: 15~25만원<br/>· 자동화형: 25만원~</p>
+    <aside>
+      <div class="brand">
+        <div class="avatar" aria-hidden="true"></div>
+        <div>
+          <h1>Your Name</h1>
+          <p>엑셀 자동화 · 매크로 · 컨설팅</p>
         </div>
       </div>
 
-      <div class="btns">
-        <a class="btn" href="mailto:yourmail@example.com">이메일 문의</a>
-        <a class="btn ghost" href="#" onclick="alert('여기에 카카오 오픈채팅 링크를 넣으면 됩니다!')">카톡 문의</a>
-      </div>
+      <nav aria-label="메인 메뉴">
+        <div class="nav-title">MENU</div>
+        <ul class="menu" id="menu">
+          <li><a href="#about" class="active"><span>소개</span><span class="badge">01</span></a></li>
+          <li><a href="#services"><span>제공 서비스</span><span class="badge">02</span></a></li>
+          <li><a href="#process"><span>진행 방식</span><span class="badge">03</span></a></li>
+          <li><a href="#pricing"><span>견적 기준</span><span class="badge">04</span></a></li>
+          <li><a href="#contact"><span>문의</span><span class="badge">05</span></a></li>
+        </ul>
+      </nav>
 
-      <p class="small">※ 문구/구성/샘플 이미지는 협의 후 맞춤 제작합니다.</p>
-    </div>
+      <div class="side-footer">
+        <a class="pill" href="#contact">📩 빠른 문의</a>
+        <a class="pill" href="#pricing">💬 견적 기준</a>
+        <a class="pill" href="#services">🧰 서비스</a>
+      </div>
+    </aside>
+
+    <main>
+      <header class="hero">
+        <h2>반복 업무를 “실제로 편해지게” 만드는 자동화</h2>
+        <p class="sub">
+          단순 매크로부터 제조업 실무 자동화까지. 파일을 먼저 보고, 과하지도 부족하지도 않게 설계합니다.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="#contact">문의하기</a>
+          <a class="btn" href="#services">서비스 보기</a>
+          <a class="btn" href="#pricing">견적 기준</a>
+        </div>
+      </header>
+
+      <section id="about" class="card">
+        <h3>소개</h3>
+        <p class="muted">
+          저는 제조업 실무에서 엑셀로 발생하는 반복·오류·야근을 줄이는 자동화에 집중합니다.
+          “돌아가기만 하는” 매크로가 아니라, 현장에서 계속 쓰이는 형태로 정리해드립니다.
+        </p>
+        <div class="kpi">
+          <span>✔ 실무 중심 설계</span>
+          <span>✔ 기존 로직 최소 변경</span>
+          <span>✔ 유지보수 고려</span>
+          <span>✔ 설명/가이드 제공</span>
+        </div>
+      </section>
+
+      <section id="services" class="card">
+        <h3>제공 서비스</h3>
+        <div class="grid">
+          <div class="tile">
+            <strong>엑셀 VBA 매크로 제작</strong>
+            <div class="muted">반복 작업 자동화, 버튼/입력 폼, 조건 분기 등</div>
+          </div>
+          <div class="tile">
+            <strong>기존 매크로 수정/개선</strong>
+            <div class="muted">오류 수정, 속도 개선, 유지보수 가능한 구조로 정리</div>
+          </div>
+          <div class="tile">
+            <strong>워크북/시트 연동</strong>
+            <div class="muted">복수 파일 데이터 통합, 자동 복사/정리/검증</div>
+          </div>
+          <div class="tile">
+            <strong>업무 컨설팅</strong>
+            <div class="muted">업무 흐름 분석 → 최소 비용으로 최대 효과 제안</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="process" class="card">
+        <h3>진행 방식</h3>
+        <div class="split">
+          <div class="tile">
+            <strong>1) 확인</strong>
+            <div class="muted">파일/요구사항/현 상태를 보고, 우선순위를 정합니다.</div>
+          </div>
+          <div class="tile">
+            <strong>2) 제안</strong>
+            <div class="muted">불필요한 기능 추가 없이 “딱 필요한 수준”으로 범위를 잡습니다.</div>
+          </div>
+          <div class="tile">
+            <strong>3) 제작·수정</strong>
+            <div class="muted">기존 로직은 최대한 유지하면서 개선합니다.</div>
+          </div>
+          <div class="tile">
+            <strong>4) 테스트·가이드</strong>
+            <div class="muted">실사용 시나리오로 테스트 후 사용법/주의사항을 안내합니다.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" class="card">
+        <h3>견적 기준</h3>
+        <p class="muted">
+          견적은 단순한 ‘작업량’이 아니라 <b>업무 복잡도</b>와 <b>개선 효과</b>를 기준으로 산정합니다.
+          또한 처음 함께 진행하는 경우, 부담 없이 시작하실 수 있도록 초기 착수 비용은 합리적으로 조정합니다.
+        </p>
+        <ul class="clean">
+          <li>기존 파일 구조/매크로 복잡도</li>
+          <li>자동화 범위 (단순 반복 ↔ 조건 분기/연동/검증)</li>
+          <li>신규 제작 vs 기존 로직 유지·개선</li>
+          <li>설명·가이드/인수인계 필요 수준</li>
+        </ul>
+      </section>
+
+      <section id="contact" class="card">
+        <h3>문의</h3>
+        <p class="muted">
+          아래 버튼의 링크를 본인 연락처로 바꾸면 됩니다.
+          (예: 이메일, 카카오톡 오픈채팅, 구글폼 등)
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="mailto:you@example.com">📧 이메일 문의</a>
+          <a class="btn" href="#" onclick="alert('여기에 카카오톡/오픈채팅 링크를 넣으세요!'); return false;">💬 카톡/오픈채팅</a>
+          <a class="btn" href="#" onclick="alert('여기에 포트폴리오 링크를 넣으세요!'); return false;">🗂 포트폴리오</a>
+        </div>
+        <p class="muted" style="margin-top:12px;">
+          문의 시 아래 정보가 있으면 견적이 훨씬 정확해집니다: <br/>
+          ① 파일/샘플 ② 원하는 결과 ③ 현재 작업 방식 ④ 마감 일정
+        </p>
+      </section>
+
+      <footer>
+        © <span id="y"></span> Your Name. Hosted on GitHub Pages.
+      </footer>
+    </main>
   </div>
+
+  <script>
+    // Footer year
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    // Active menu highlight on scroll
+    const links = Array.from(document.querySelectorAll("#menu a"));
+    const sections = links.map(a => document.querySelector(a.getAttribute("href")));
+
+    const setActive = (id) => {
+      links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      // 가장 많이 보이는 섹션을 active로
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActive(visible.target.id);
+    }, { root: null, threshold: [0.25, 0.4, 0.6] });
+
+    sections.forEach(sec => sec && observer.observe(sec));
+  </script>
 </body>
 </html>
